@@ -5,7 +5,14 @@ A Clojure application designed to add remotes for every fork on the github.
 If you found interesting repo, but isn't good enough for you, it's often very hard to choose which fork does exactly what you want. With this fetcher you're able to quickly add all forks as remotes in your local repository and just look througs all commits in all repos.
 
 ## Usage
-You can clone the source code and run in leiningen:
+Easiest way — is just grab and run jar file (you need only java machine to be installed):
+
+```
+wget https://github.com/ReDetection/forksfetcher/blob/download/target/forksfetcher-0.1.0.jar
+java -jar forksfetcher-0.1.0.jar /path/to/cloned/repo
+```
+
+Or you can clone the source code and run in leiningen:
 
 ```
 git clone https://github.com/ReDetection/forksfetcher
