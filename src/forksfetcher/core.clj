@@ -16,10 +16,24 @@
 )
 
 (defn getForks [repourl]
-  (let [[user reponame] (namesFromUrl repourl)]
-    (def forksInfo (tentacles.repos/forks user reponame))
-    (map :clone_url forksInfo)
-  )
+  (loop [giturls nil
+         htmlurls (list repourl)]
+    (if (first htmlurls)
+      (let [[user reponame] (namesFromUrl (first htmlurls))]
+        (def forksInfo (tentacles.repos/forks user reponame))
+        (if (:message forksInfo)
+          (do (println "Rate limit exceeded, I will break") giturls)
+          (do 
+            (def gitsadd (map :clone_url forksInfo))
+            (def htmlsadd (map :html_url forksInfo))
+            (recur (concat giturls gitsadd)
+                   (concat (rest htmlurls) htmlsadd))
+            )
+        )
+      )
+      giturls
+    )
+  )  
 )
 
 (defn addRemoteAndFetch [gitrepo url]
@@ -34,7 +48,6 @@
         (println (str "Nothing to fetch from " user "'s fork")))
     )
   )
-
 )
 
 (defn addForks [gitrepo forks]
