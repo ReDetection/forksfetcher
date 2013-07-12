@@ -8,7 +8,7 @@ If you found interesting repo, but isn't good enough for you, it's often very ha
 Easiest way — is just grab and run jar file (you need only java machine to be installed):
 
 ```
-wget https://github.com/ReDetection/forksfetcher/blob/download/target/forksfetcher-0.1.0.jar
+wget https://github.com/ReDetection/forksfetcher/raw/download/target/forksfetcher-0.1.0.jar
 java -jar forksfetcher-0.1.0.jar /path/to/cloned/repo
 ```
 
