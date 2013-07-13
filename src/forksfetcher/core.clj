@@ -25,7 +25,7 @@
           (do (println "Rate limit exceeded, I will break") giturls)
           (do 
             (def gitsadd (map :clone_url forksInfo))
-            (def htmlsadd (map :html_url forksInfo))
+            (def htmlsadd (filter identity (map (fn ([x] (if (> (:forks_count x) 0) (:html_url x)))) forksInfo)))
             (recur (concat giturls gitsadd)
                    (concat (rest htmlurls) htmlsadd))
             )

@@ -34,3 +34,4 @@ If you want to contribute just fork the repository, work on the code, cover it w
 * no git found in dir exception handling
 * continue to forks search after reaching github api rate limit 
 * try to add remotes just from html_url, not from clone_url
+* fix the nil nil nil nil nil nil output
