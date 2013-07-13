@@ -60,11 +60,11 @@
   "The application's main function"
   ([& args]
     (def repo-dir (if args (first args) (System/getProperty "user.dir")))
-    (def repo (git/load-repo repo-dir)) ; catch exception 
-    (def repoURL (originURL repo))
-    (println (str "First remote url at " repo-dir " is " repoURL))
-    (def forks (getForks repoURL))
-    (println (str "It has " (count forks) " forks"))
-    (addForks repo forks)
-  )
-)
+    (if-let [repo (try (git/load-repo repo-dir) (catch java.io.FileNotFoundException e nil) )]
+      (do 
+        (def repoURL (originURL repo))
+        (println (str "First remote url at " repo-dir " is " repoURL))
+        (def forks (getForks repoURL))
+        (println (str "It has " (count forks) " forks"))
+        (addForks repo forks))
+      "Can't find any git repo")))
