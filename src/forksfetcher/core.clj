@@ -3,11 +3,16 @@
   (:require [clojure.java.io :as io] [clj-jgit.porcelain :as git] tentacles.repos)
   (:gen-class :main true))
 
+(defn remove-from-end [s end]
+  (if (.endsWith s end)
+      (.substring s 0 (- (count s)
+                         (count end)))
+    s))
 
-(defn originURL [gitrepo]
+(defn githubHtmlUrl [gitrepo]
   (def conf (.getConfig (.getRepository gitrepo)))
   (def origin (first (.getSubsections conf "remote")))
-  (.getString conf "remote" origin "url")
+  (remove-from-end (.getString conf "remote" origin "url") ".git")
 )
 
 (defn namesFromUrl [githubURL]
@@ -62,7 +67,7 @@
     (def repo-dir (if args (first args) (System/getProperty "user.dir")))
     (if-let [repo (try (git/load-repo repo-dir) (catch java.io.FileNotFoundException e nil) )]
       (do 
-        (def repoURL (originURL repo))
+        (def repoURL (githubHtmlUrl repo))
         (println (str "First remote url at " repo-dir " is " repoURL))
         (def forks (getForks repoURL))
         (println (str "It has " (count forks) " forks"))
