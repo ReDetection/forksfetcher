@@ -31,6 +31,7 @@ Distributed under the Eclipse Public License, the same as Clojure.
 
 If you want to contribute just fork the repository, work on the code, cover it with tests and submit a pull request through Github. Tasks I need to do:
 
+* look also for parent, not only for child repos
 * continue to forks search after reaching github api rate limit 
 * try to add remotes just from html_url, not from clone_url
 * fix the nil nil nil nil nil nil output
