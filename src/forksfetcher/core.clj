@@ -56,9 +56,9 @@
 )
 
 (defn addForks [gitrepo forks]
-  (for [fork forks]
+  (dorun (for [fork forks]
     (addRemoteAndFetch gitrepo fork)
-  )
+  ))
 )
 
 (defn -main 
