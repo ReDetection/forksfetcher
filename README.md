@@ -15,7 +15,8 @@ java -jar forksfetcher-0.1.0.jar /path/to/cloned/repo
 Or you can clone the source code and run in leiningen:
 
 ```
-git clone https://github.com/ReDetection/forksfetcher
+git clone https://github.com/ReDetection/forksfetcher.git
+cd forksfetcher
 lein run /path/to/cloned/repo
 ```
 
