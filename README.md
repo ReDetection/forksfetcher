@@ -35,4 +35,3 @@ If you want to contribute just fork the repository, work on the code, cover it w
 * look also for parent, not only for child repos
 * continue to forks search after reaching github api rate limit 
 * try to add remotes just from html_url, not from clone_url
-* recursion omits some repos :(

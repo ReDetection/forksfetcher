@@ -20,20 +20,36 @@
   [(first parts) (first (rest parts))]
 )
 
+(defn getAllPagesWForks [repourl]
+  (let [[user reponame] (namesFromUrl repourl)]
+    (loop [result nil
+           page 1]
+      (let [forkspage (tentacles.repos/forks user reponame {:per_page 100 :page page})] 
+        (if (:message forkspage)
+          (do (println "Rate limit exceeded, I will break") [result 1])
+          (if (< 0 (count forkspage))
+            (recur (concat result forkspage) (+ 1 page))
+            [result 0]
+          )
+        )
+      )
+    )
+  )
+)
+
 (defn getForks [repourl]
   (loop [giturls nil
          htmlurls (list repourl)]
     (if (first htmlurls)
-      (let [[user reponame] (namesFromUrl (first htmlurls))]
-        (def forksInfo (tentacles.repos/forks user reponame))
-        (if (:message forksInfo)
-          (do (println "Rate limit exceeded, I will break") giturls)
+      (let [[forksInfo limitWasReached] (getAllPagesWForks (first htmlurls))]
+        (if (= 1 limitWasReached)
+          giturls
           (do 
             (def gitsadd (map :clone_url forksInfo))
             (def htmlsadd (filter identity (map (fn ([x] (if (> (:forks_count x) 0) (:html_url x)))) forksInfo)))
             (recur (concat giturls gitsadd)
                    (concat (rest htmlurls) htmlsadd))
-            )
+          )
         )
       )
       giturls
