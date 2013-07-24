@@ -67,6 +67,8 @@
       (git/git-fetch gitrepo user) (println (str "Fetched " user "'s fork")) ;(str "+refs/heads/*:refs/remotes/" user "/*") ;(println "before fetching") 
       (catch org.eclipse.jgit.api.errors.TransportException e 
         (println (str "Nothing to fetch from " user "'s fork")))
+      (catch java.lang.Exception e 
+        (println (str "Can't fetch " user "'s fork — please check availability at url " (remove-from-end url ".git"))))
     )
   )
 )
